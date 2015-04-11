@@ -1,19 +1,6 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-author: "Oscar Reyes"
-date: "April 10, 2015"
-output:
-  html_document:
-    toc: true
-    number_sections: true
-    theme: readable
-    keep_md: true
-    highlight: tango
-    fig_width: 7
-    fig_height: 6
-    fig_caption: true
-    css: css/styles.css
----
+# Reproducible Research: Peer Assessment 1
+Oscar Reyes  
+April 10, 2015  
 
 #Introduction 
 ***
@@ -59,7 +46,8 @@ Show any code that is needed to:
 Answer: 
 </p>        
 
-```{r loading_info, echo = TRUE}
+
+```r
 # Libraries
 library (ggplot2)
 library (graphics)
@@ -98,15 +86,48 @@ setwd (main_folder)
 Answer: 
 </p>    
 
-```{r info_activity, echo =TRUE}
+
+```r
 ### head (info_activity)
 head (info_activity)
+```
 
+```
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
+```
+
+```r
 ### Structure of data.frame (info_activity) --> str (info_activity)
 str (info_activity)
+```
 
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: num  0 5 10 15 20 25 30 35 40 45 ...
+```
+
+```r
 ### Summary of data.frame (info_activity) --> summary (info_activity)
 summary (info_activity)
+```
+
+```
+##      steps             date               interval     
+##  Min.   :  0.00   Min.   :2012-10-01   Min.   :   0.0  
+##  1st Qu.:  0.00   1st Qu.:2012-10-16   1st Qu.: 588.8  
+##  Median :  0.00   Median :2012-10-31   Median :1177.5  
+##  Mean   : 37.38   Mean   :2012-10-31   Mean   :1177.5  
+##  3rd Qu.: 12.00   3rd Qu.:2012-11-15   3rd Qu.:1766.2  
+##  Max.   :806.00   Max.   :2012-11-30   Max.   :2355.0  
+##  NA's   :2304
 ```
 
 ##What is mean total number of steps taken per day?
@@ -121,14 +142,74 @@ For this part of the assignment, you can ignore the missing values in the datase
 Answer: 
 </p>    
 
-```{r histogram1, echo = TRUE}
+
+```r
 ## Calculate the total number of steps taken per day
 steps_per_day <- aggregate (steps ~ date,
                             data = info_activity,
                             sum,
                             na.rm = TRUE)
 steps_per_day
+```
 
+```
+##          date steps
+## 1  2012-10-02   126
+## 2  2012-10-03 11352
+## 3  2012-10-04 12116
+## 4  2012-10-05 13294
+## 5  2012-10-06 15420
+## 6  2012-10-07 11015
+## 7  2012-10-09 12811
+## 8  2012-10-10  9900
+## 9  2012-10-11 10304
+## 10 2012-10-12 17382
+## 11 2012-10-13 12426
+## 12 2012-10-14 15098
+## 13 2012-10-15 10139
+## 14 2012-10-16 15084
+## 15 2012-10-17 13452
+## 16 2012-10-18 10056
+## 17 2012-10-19 11829
+## 18 2012-10-20 10395
+## 19 2012-10-21  8821
+## 20 2012-10-22 13460
+## 21 2012-10-23  8918
+## 22 2012-10-24  8355
+## 23 2012-10-25  2492
+## 24 2012-10-26  6778
+## 25 2012-10-27 10119
+## 26 2012-10-28 11458
+## 27 2012-10-29  5018
+## 28 2012-10-30  9819
+## 29 2012-10-31 15414
+## 30 2012-11-02 10600
+## 31 2012-11-03 10571
+## 32 2012-11-05 10439
+## 33 2012-11-06  8334
+## 34 2012-11-07 12883
+## 35 2012-11-08  3219
+## 36 2012-11-11 12608
+## 37 2012-11-12 10765
+## 38 2012-11-13  7336
+## 39 2012-11-15    41
+## 40 2012-11-16  5441
+## 41 2012-11-17 14339
+## 42 2012-11-18 15110
+## 43 2012-11-19  8841
+## 44 2012-11-20  4472
+## 45 2012-11-21 12787
+## 46 2012-11-22 20427
+## 47 2012-11-23 21194
+## 48 2012-11-24 14478
+## 49 2012-11-25 11834
+## 50 2012-11-26 11162
+## 51 2012-11-27 13646
+## 52 2012-11-28 10183
+## 53 2012-11-29  7047
+```
+
+```r
 ## Calculate and report the mean and median total number of steps taken per day
 mean_steps <- mean (steps_per_day$steps)
 median_steps <- median (steps_per_day$steps)
@@ -166,6 +247,8 @@ legend (15000,
         lwd = 2
         )
 ```
+
+![](PA1_template_files/figure-html/histogram1-1.png) 
       
 <p class = "question"> 
 **2.** Calculate and report the mean and median total number of steps taken per day.
@@ -184,13 +267,37 @@ The mean and median values are:
 
 Both data (<code class = "data">mean</code> and <code class = "data">media</code>) are shown in the graphic.
 
-```{r mean_median, echo=TRUE}
-summary (steps_per_day)
 
+```r
+summary (steps_per_day)
+```
+
+```
+##       date                steps      
+##  Min.   :2012-10-02   Min.   :   41  
+##  1st Qu.:2012-10-16   1st Qu.: 8841  
+##  Median :2012-10-29   Median :10765  
+##  Mean   :2012-10-30   Mean   :10766  
+##  3rd Qu.:2012-11-16   3rd Qu.:13294  
+##  Max.   :2012-11-29   Max.   :21194
+```
+
+```r
 # Mean
 mean_steps
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 # Median
 median_steps
+```
+
+```
+## [1] 10765
 ```
 
 
@@ -204,7 +311,8 @@ median_steps
 Answer: 
 </p>    
 
-```{r time_series_plot, echo=TRUE}
+
+```r
 info_activity_noNA <- info_activity[complete.cases(info_activity),]
 average_steps <- as.data.frame (tapply (info_activity_noNA$steps,
                                         INDEX = info_activity_noNA$interval,
@@ -217,6 +325,19 @@ average_steps$interval <- rownames (average_steps)
 row.names (average_steps) <- NULL
 
 head (average_steps)
+```
+
+```
+##   average_steps interval
+## 1     1.7169811        0
+## 2     0.3396226        5
+## 3     0.1320755       10
+## 4     0.1509434       15
+## 5     0.0754717       20
+## 6     2.0943396       25
+```
+
+```r
 ### Time series plot
 plot (average_steps$interval,
       average_steps$average_steps,
@@ -246,6 +367,8 @@ legend (900,
         lwd = 4
         )
 ```
+
+![](PA1_template_files/figure-html/time_series_plot-1.png) 
        
            
 <p class = "question"> 
@@ -258,9 +381,14 @@ Answer:
 
 The ***interval <code class = "data">835</code>*** contains the maximum number of steps, as is shown in the graphic.
 
-```{r max_steps_number, echo=TRUE}
+
+```r
 which_max_steps
-```    
+```
+
+```
+## [1] 835
+```
 
 ###Imputing missing values
 ***
@@ -276,10 +404,15 @@ Answer:
 
 The total number of missing values in the dataset are <code class = "data">2304</code>.
 
-```{r missing_values, echo=TRUE}
+
+```r
 total_NAs <- sum (is.na (info_activity))
 
 total_NAs
+```
+
+```
+## [1] 2304
 ```
        
 <p class = "question"> 
@@ -301,7 +434,8 @@ Answer:
 </p>    
 The new dataset is called <code class = "data">average_steps_mean</code>.     
 
-```{r missing_data_filled, echo=TRUE}
+
+```r
 ## Create a new dataset that is equal to the original dataset
 ##  but with the missing data filled in.
 info_activity_steps <- dcast (info_activity,
@@ -337,8 +471,30 @@ steps_per_day_mean <- aggregate (steps ~ date,
 )
 
 summary (average_steps_mean)
+```
 
+```
+##     interval           date                steps       
+##  Min.   :   0.0   Min.   :2012-10-01   Min.   :  0.00  
+##  1st Qu.: 588.8   1st Qu.:2012-10-16   1st Qu.:  0.00  
+##  Median :1177.5   Median :2012-10-31   Median :  0.00  
+##  Mean   :1177.5   Mean   :2012-10-31   Mean   : 39.16  
+##  3rd Qu.:1766.2   3rd Qu.:2012-11-15   3rd Qu.: 37.00  
+##  Max.   :2355.0   Max.   :2012-11-30   Max.   :806.00
+```
+
+```r
 head (average_steps_mean)
+```
+
+```
+##   interval       date     steps
+## 1        0 2012-10-01 1.4677419
+## 2        5 2012-10-01 0.3709677
+## 3       10 2012-10-01 0.2741935
+## 4       15 2012-10-01 0.3709677
+## 5       20 2012-10-01 0.3870968
+## 6       25 2012-10-01 2.1935484
 ```
 
 <p class = "question"> 
@@ -359,7 +515,8 @@ Yes, values differ from the estimates from the first part, as is shown in the gr
 |<code class = "data">median1</code> | <code class = "data">10765</code>   |
 |<code class = "data">median2</code> | <code class = "data">11458</code>   |
 
-```{r histogram_steps_per_day_mean, echo=TRUE}
+
+```r
 ## Create a new factor variable in the dataset with two levels – “weekday” and “weekend”
 ##   indicating whether a given date is a weekday or weekend day.
 steps_per_day_mean <- aggregate (steps ~ date,
@@ -453,6 +610,8 @@ legend (15000,
         )
 ```
 
+![](PA1_template_files/figure-html/histogram_steps_per_day_mean-1.png) 
+
 ##Are there differences in activity patterns between weekdays and weekends?
 ***
 For this part the <code class = "data">weekdays()</code> function may be of some help here. Use the dataset with the filled-in missing values for this part.    
@@ -461,15 +620,27 @@ For this part the <code class = "data">weekdays()</code> function may be of some
 
 <p class = "answer"> Answer: </p>    
 
-```{r day_type, echo=TRUE}
+
+```r
 summary (average_steps_mean)
+```
+
+```
+##     interval           date                steps          day_type        
+##  Min.   :   0.0   Min.   :2012-10-01   Min.   :  0.00   Length:17568      
+##  1st Qu.: 588.8   1st Qu.:2012-10-16   1st Qu.:  0.00   Class :character  
+##  Median :1177.5   Median :2012-10-31   Median :  0.00   Mode  :character  
+##  Mean   :1177.5   Mean   :2012-10-31   Mean   : 39.16                     
+##  3rd Qu.:1766.2   3rd Qu.:2012-11-15   3rd Qu.: 37.00                     
+##  Max.   :2355.0   Max.   :2012-11-30   Max.   :806.00
 ```
     
 <p class = "question"> **2.** Make a panel plot containing a time series plot (i.e. <code class = "data">type = "l"</code>) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:</p>   
 
 <p class = "answer"> Answer: </p>    
 
-```{r plot_day_type, echo=TRUE}
+
+```r
 xyplot (steps ~ interval | day_type,
         steps_time_series,
         type = "l",
@@ -481,6 +652,8 @@ xyplot (steps ~ interval | day_type,
         ylab = "Average Number of Steps Taken",
         )
 ```
+
+![](PA1_template_files/figure-html/plot_day_type-1.png) 
 
 [Fitbit]: http://www.fitbit.com/    "Fitbit"    
 [Nike Fuelband]: http://www.nike.com/us/en_us/c/nikeplus-fuelband    "Nike Fuelband"     

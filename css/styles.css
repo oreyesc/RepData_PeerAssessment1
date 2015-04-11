@@ -1,0 +1,110 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	font-family: "Roboto Condensed", sans-serif;
+}
+
+body{
+	color: #666;
+	background-color: #F0F0F0;
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: large;
+}
+
+.container{
+	width: 80%;/*/800px;*/
+	min-height: 60%;/*600px;*/
+	margin:	auto;
+	padding: 2%;/*20px;*/
+	background-color: #FFF;
+	border: solid 1px #CCC;
+}
+
+.center{
+	margin: auto;
+	text-align: center;
+}
+
+.question{
+	color: rgba(12, 0, 135, 1);
+	font-size: x-large;
+	font-weight: bolder;
+}
+
+.answer{
+	color: rgba(194, 0, 11, 1);
+	font-size: x-large;
+	font-weight: bolder;
+}
+
+.data{
+	color: rgba(0, 110, 10, 1);
+	font-weight: bold;
+	font-size: larger;
+}
+
+.centertext{
+	text-align: center;
+}
+
+.form input{
+	width: 80%;
+	padding: 6px;
+}
+
+.footer{
+	margin-top: 30%;
+	font-size: 14px;
+	color: #FF6905;
+}
+
+.footer a{
+	text-decoration: none;
+}
+
+#resultados{
+	min-height: 50%;/*290px;*/
+}
+
+.logoempresa{
+	width: 30%;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}
+
+.articulos{
+	margin-bottom: 0.5%;
+	background-color: #F1F1F1;
+	padding: 1%;
+}
+
+p{
+	text-align: justify;
+}
+
+.titulo{
+	font-size: 120%;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #131212;
+}
+
+.articulos:hover{
+	text-decoration: underline;
+	background-color: #dedede;
+}
+
+.contenido{
+	font-size: 90%;
+	text-decoration: none;
+}
+.articulos a{
+	text-decoration: none;
+	color: #666;
+}
+
+.strongletter{
+	color: #606060;
+	font-weight: bolder;
+}
+
