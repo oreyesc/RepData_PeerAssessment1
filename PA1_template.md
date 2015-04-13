@@ -32,7 +32,7 @@ For the plotting aspects of this assignment, feel free to use any plotting syste
 Fork/clone the [GitHub repository created for this assignment]. You will submit this assignment by pushing your completed files into your forked repository on GitHub. The assignment submission will consist of the URL to your GitHub repository and the SHA-1 commit ID for your repository state.
 
 
-NOTE: The GitHub repository also contains the dataset for the assignment so you do not have to download the data separately.
+> **NOTE**: The GitHub repository also contains the dataset for the assignment so you do not have to download the data separately.
 
 ##Loading and preprocessing the data
 ***
@@ -40,11 +40,21 @@ Show any code that is needed to:
 
 <p class = "question"> 
 **1.** Load the data (i.e. <code class = "data">read.csv()</code>).
-</p>   
+</p>     
 
-<p class = "answer"> 
+<p class = "answer">    
 Answer: 
+</p>    
+       
+<p class = "info">     
+The <code class = "data data1">setwd()</code> command is used to setting the working directory (in this case is <code class = "data data1">activity</code>), additionally, other folders are created:    
+ - **Raw Data**: contains the dataset (<code class = "data data1">activity.csv</code>).    
+ - **css**: contains all css files (<code class = "data data1">styles.css</code>).    
+ - **img**: contains all images.   
+ <code class = "data data1">colClasses</code>: has been used to declare the format of each variable.     
 </p>        
+     
+  
 
 
 ```r
@@ -77,15 +87,21 @@ setwd (main_dir)
 setwd (main_folder)
 ```
 
-
 <p class = "question">
 **2.** Process/transform the data (if necessary) into a format suitable for your analysis.
 </p>    
-
-<p class = "answer"> 
+      
+<p class = "answer">    
 Answer: 
 </p>    
-
+       
+<p class = "info">     
+<code class = "data data1">colClasses</code>: has been used to declare the format of each variable:    
+- ***steps*** as <code class = "data data1">numeric</code>.   
+- ***date*** as <code class = "data data1">Date</code>.    
+- ***interval*** as <code class = "data data1">numeric</code>.
+</p>        
+      
 
 ```r
 ### head (info_activity)
@@ -142,12 +158,16 @@ For this part of the assignment, you can ignore the missing values in the datase
 Answer: 
 </p>    
 
+<p class = "info">     
+Using the function <code class = "data data1">aggregate</code> all <code class = "data data1"> NA </code>'s are ignored and a new subset is created, computting summary statistics for each with function <code class = "data data1">sum</code> per <code class = "data data1">date</code>.
+</p>
+
 
 ```r
 ## Calculate the total number of steps taken per day
 steps_per_day <- aggregate (steps ~ date,
                             data = info_activity,
-                            sum,
+                            FUN = sum,
                             na.rm = TRUE)
 steps_per_day
 ```
@@ -258,15 +278,20 @@ legend (15000,
 Answer: 
 </p>    
 
-The mean and median values are:
-
-| Data   | Value    |
-| :----- | -------: |
-|<code class = "data">mean</code>  |<code class = "data">10766.19</code>|
-|<code class = "data">median</code>|<code class = "data">10765</code>   |
-
-Both data (<code class = "data">mean</code> and <code class = "data">media</code>) are shown in the graphic.
-
+<p class = "info">     
+Functions <code class = "data data1">mean</code> and <code class = "data data1">median</code> are used to calculate  the required values.
+</p>
+     
+<table class = "tg">   
+<thead>
+<tr><th class="tg-031e">**Data**</th><th class="tg-031e">**Value**</th></tr>
+</thead>   
+<tbody>
+<tr><td class="tg-031e"><code class = "data">mean</code></td><td class="tg-031e"><code class = "data">10766.19</code></td></tr>   
+<tr><td class="tg-031e"><code class = "data">media</code></td><td class="tg-031e"><code class = "data">11458</code></td></tr>
+</tbody>    
+</table>      
+    
 
 ```r
 summary (steps_per_day)
@@ -309,8 +334,16 @@ median_steps
 
 <p class = "answer"> 
 Answer: 
-</p>    
+</p>   
 
+<p class = "info">     
+In order to calculate the '<code class = "data data1">mean</code>' of the steps by <code class = "data data1">interval</code>, the function '<code class = "data data1">complete.cases</code>' is used, to obtaing all no missing values.
+The function '<code class = "data data1">tapply</code>' is used, and it contains and uses:      
+- The function '<code class = "data data1">mean</code>'.    
+- As index the '<code class = "data data1">interval</code>' variable of the '<code class = "data data1">info_activity</code>' dataset, which contains all initial dataset information.
+And a new column, called '<code class = "data data1">average steps</code>', is added to the dataset, in order to contain all results.  **This column has the same name of the new dataset**, used to plot all.
+</p>    
+    
 
 ```r
 info_activity_noNA <- info_activity[complete.cases(info_activity),]
@@ -379,7 +412,10 @@ legend (900,
 Answer: 
 </p>    
 
-The ***interval <code class = "data">835</code>*** contains the maximum number of steps, as is shown in the graphic.
+<p class = "info">     
+The ***interval '<code class = "data data1">835</code>'*** contains the maximum number of steps, as is shown in the graphic.  And the result is contained in the '<code class = "data data1">which_max_steps</code>' variable.
+As is shown in the '<code class = "data data1">summary</code>' the maximum average of steps is '<code class = "data data1"> 206.170</code>', after and before (500 value) the trend is regular, except at the beginning (0 - 500) and at the end (2000 tot the end).
+</p>
 
 
 ```r
@@ -388,6 +424,20 @@ which_max_steps
 
 ```
 ## [1] 835
+```
+
+```r
+summary (average_steps)
+```
+
+```
+##  average_steps       interval        
+##  Min.   :  0.000   Length:288        
+##  1st Qu.:  2.486   Class :character  
+##  Median : 34.113   Mode  :character  
+##  Mean   : 37.383                     
+##  3rd Qu.: 52.835                     
+##  Max.   :206.170
 ```
 
 ###Imputing missing values
@@ -402,7 +452,9 @@ Note that there are a number of days/intervals where there are missing values (c
 Answer: 
 </p>    
 
-The total number of missing values in the dataset are <code class = "data">2304</code>.
+<p class = "info">     
+The total number of missing values in the dataset are '<code class = "data data1">2304</code>'.
+</p>
 
 
 ```r
@@ -423,7 +475,9 @@ total_NAs
 Answer: 
 </p>
 
-The strategy for filling in all missing values in the dataset is to use the <code class = "data">5-minutes mean</code>.
+<p class = "info">     
+The strategy for filling in all missing values in the dataset is to use the '<code class = "data">5-minutes mean</code>'.
+</p>
 
 <p class = "question"> 
 **3.** Create a new dataset that is equal to the original dataset but with the missing data filled in.
@@ -432,7 +486,12 @@ The strategy for filling in all missing values in the dataset is to use the <cod
 <p class = "answer"> 
 Answer: 
 </p>    
-The new dataset is called <code class = "data">average_steps_mean</code>.     
+<p class = "info"> The new dataset is called '<code class = "data">average_steps_mean</code>'.    
+The '<code class = "data">dcast</code>' function is used to fill with '<code class = "data">0</code>' all missing values of the '<code class = "data">info_activity</code>' dataset, and the result is stored in '<code class = "data">info_activity_steps</code>' dataset.     
+The '<code class = "data">dcast</code>' function is used, again, to fill all 'missing values' contained in the '<code class = "data">info_activity</code>' dataframe with the '<code class = "data">rowMeans</code>' function result, having as main dataset the '<code class = "data">info_activity</code>' dataset and as parameter the '<code class = "data">info_activity_steps</code>' dataframe, this last dataset does not contains 'missing values', so it can be used to calculate the '<code class = "data">mean</code>'.     
+The variable '<code class = "data">date</code>' is converted to '<code class = "data">Date</code>'.
+The '<code class = "data">info_activity_steps</code>' dataframe is reshaped and the result is stored in the '<code class = "data">average_steps_mean</code>' data.frame.
+</p>
 
 
 ```r
@@ -505,15 +564,21 @@ head (average_steps_mean)
 Answer: 
 </p>      
     
-Yes, values differ from the estimates from the first part, as is shown in the graphic.
+<p class = "info">Yes, values differ from the estimates from the first part, as is shown in the graphic.
+</p>
 
-| Data                               | Value                               |
-| :--------------------------------- | ----------------------------------: |
-|<code class = "data">mean1</code>   | <code class = "data">10766.19</code>|
-|<code class = "data">mean2</code>   | <code class = "data">11278.56</code>|
-|                                    |                                     |
-|<code class = "data">median1</code> | <code class = "data">10765</code>   |
-|<code class = "data">median2</code> | <code class = "data">11458</code>   |
+<table class = "tg">   
+<thead>
+<tr><th class="tg-031e">**Data**</th><th class="tg-031e">**Value**</th></tr>
+</thead>   
+<tbody>
+<tr><td class="tg-031e"><code class = "data">mean1</code></td><td class="tg-031e"><code class = "data">10766.19</code></td></tr>   
+<tr><td class="tg-031e"><code class = "data">mean2</code></td><td class="tg-031e"><code class = "data">11278.56</code></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td class="tg-031e"><code class = "data">median1</code></td><td class="tg-031e"><code class = "data">10765.19</code></td></tr>   
+<tr><td class="tg-031e"><code class = "data">median2</code></td><td class="tg-031e"><code class = "data">11458</code></td></tr>
+</tbody>    
+</table>    
 
 
 ```r
@@ -619,9 +684,42 @@ For this part the <code class = "data">weekdays()</code> function may be of some
 <p class = "question"> **1.** Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.</p>    
 
 <p class = "answer"> Answer: </p>    
+<p class = "info"> A cycle is used to fill a new variable called '<code class = "data">day_type</code>' with levels <code class = "data">weekday</code>' or '<code class = "data">weekend</code>' according it corresponds.      
+The mean is calculated per each type of day.
+</p>
 
 
 ```r
+size_frame <- nrow (average_steps_mean)
+for (i in 1:size_frame) {
+        if (weekdays (average_steps_mean$date[i]) %in% c ("Saturday", "Sunday")) {
+                average_steps_mean$day_type[i] <- "weekend"
+        }
+        else {
+                average_steps_mean$day_type[i] <- "weekday"
+        }
+}
+##  Make a panel plot containing a time series plot (i.e. type = "l")
+##   of the 5-minute interval (x-axis) and the average number of steps taken,
+##   averaged across all weekday days or weekend days (y-axis).
+## See the README file in the GitHub repository to see an example
+##   of what this plot should look like using simulated data.
+
+steps_time_series <- aggregate (steps ~ interval + day_type,
+                                data = average_steps_mean,
+                                FUN = mean
+)
+
+day_type_mean <- aggregate (average_steps_mean$steps,
+                            by = list (average_steps_mean$day_type),
+                            FUN = mean,
+                            na.rm = TRUE
+)
+
+colnames (day_type_mean) <- c ("day_type", "mean")
+weekdays_mean <- round (day_type_mean[1,2], 2)
+weekend_mean <- round (day_type_mean[1,2], 2)
+
 summary (average_steps_mean)
 ```
 
@@ -634,10 +732,28 @@ summary (average_steps_mean)
 ##  3rd Qu.:1766.2   3rd Qu.:2012-11-15   3rd Qu.: 37.00                     
 ##  Max.   :2355.0   Max.   :2012-11-30   Max.   :806.00
 ```
+
+```r
+weekdays_mean
+```
+
+```
+## [1] 37.42
+```
+
+```r
+weekend_mean
+```
+
+```
+## [1] 37.42
+```
     
 <p class = "question"> **2.** Make a panel plot containing a time series plot (i.e. <code class = "data">type = "l"</code>) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was created using simulated data:</p>   
 
 <p class = "answer"> Answer: </p>    
+<p class = "info"> The '<code class = "data">Time Series Plot</code>' shows a more continuous '<code class = "data">activity (Average Steps)</code>' in '<code class = "data">weekend</code>' than '<code class = "data">weekday</code>', however, the highest vaule in average steps occurs in '<code class = "data">weekday</code>'.
+</p>
 
 
 ```r
